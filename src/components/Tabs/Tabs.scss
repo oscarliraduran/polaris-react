@@ -5,6 +5,7 @@ $item-min-width: rem(50px);
 $item-vertical-padding: $item-min-height / 2;
 $border-bottom-height: border-width(thicker);
 $tab-separation-spacing: spacing(tight);
+$tab-item-margin-top: 0.1rem;
 $focus-state-box-shadow-color: rgba(92, 106, 196, 0.8);
 
 .Tabs {
@@ -23,7 +24,7 @@ $focus-state-box-shadow-color: rgba(92, 106, 196, 0.8);
 
   .TabContainer {
     flex: 1 1 100%;
-    margin-left: $tab-separation-spacing;
+    margin-left: var(--p-border-radius-wide, 0);
   }
 
   .Tab {
@@ -64,7 +65,7 @@ $focus-state-box-shadow-color: rgba(92, 106, 196, 0.8);
   justify-content: center;
   width: 100%;
   min-width: 100%; // IE11 fix for overflowing flex items from parent container
-  margin-top: 1px;
+  margin-top: $tab-item-margin-top;
   margin-bottom: -1px;
   padding: var(--p-override-zero, 0 spacing());
   outline: none;
@@ -228,6 +229,10 @@ $focus-state-box-shadow-color: rgba(92, 106, 196, 0.8);
   }
 }
 
+.activator {
+  border-bottom: var(--p-override-zero, $border-bottom-height) solid transparent;
+}
+
 .DisclosureTab {
   display: none;
 }
@@ -236,14 +241,24 @@ $focus-state-box-shadow-color: rgba(92, 106, 196, 0.8);
   display: flex;
 }
 
+// tabs underline height + space away from underline - 1px (top margin from legacy code)
+$disclosure-margin-bottom: $border-bottom-height + spacing(extra-tight) -
+  $tab-item-margin-top;
+.DisclosureTab-newDesignLanguage {
+  margin: $tab-item-margin-top 0 $disclosure-margin-bottom
+    $tab-separation-spacing;
+}
+
 .DisclosureActivator {
   @include recolor-icon(color('ink', 'lighter'));
   position: relative;
   display: block;
   justify-content: center;
   height: 100%;
-  margin: 1px 1px -1px 0;
+  margin: var(--p-override-zero, 1px 1px -1px 0);
   padding: 0 spacing();
+  border-radius: var(--p-border-radius-base);
+
   background-color: transparent;
   cursor: pointer;
   border: none;
@@ -251,10 +266,12 @@ $focus-state-box-shadow-color: rgba(92, 106, 196, 0.8);
   text-align: center;
 
   &:hover {
+    background-color: var(--p-surface-hovered, transparent);
+
     .Title {
       @include recolor-icon(color('ink'));
-      border-bottom: $border-bottom-height solid
-        var(--p-override-transparent, color('sky'));
+      border-bottom: var(--p-override-zero, $border-bottom-height) solid
+        color('sky');
 
       @media (-ms-high-contrast: active) {
         @include recolor-icon(color('black'));
@@ -276,8 +293,8 @@ $focus-state-box-shadow-color: rgba(92, 106, 196, 0.8);
     );
 
     .Title {
-      border-bottom: $border-bottom-height solid
-        var(--p-override-transparent, color('indigo', 'light'));
+      border-bottom: var(--p-override-zero, $border-bottom-height) solid
+        color('indigo', 'light');
     }
   }
 }
