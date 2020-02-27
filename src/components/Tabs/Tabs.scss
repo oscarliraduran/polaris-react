@@ -20,10 +20,10 @@ $focus-state-box-shadow-color: rgba(92, 106, 196, 0.8);
 
 .fitted {
   flex-wrap: nowrap;
-  padding-right: 0;
 
   .TabContainer {
     flex: 1 1 100%;
+    margin-left: $tab-separation-spacing;
   }
 
   .Tab {
